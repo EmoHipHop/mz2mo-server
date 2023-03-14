@@ -4,6 +4,7 @@ pipeline {
         jdk 'Java17'
     }
     environment {
+        PROJECT_NAME = env.JOB_NAME.substringAfterLast("/")
         GITHUB_CREDENTIAL_ID = "github"
         GITHUB_BRANCH = "master"
         GITHUB_URL = "https://github.com/EmoHipHop/mz2mo-server"
@@ -52,6 +53,23 @@ pipeline {
             steps {
                 sh 'docker run -p 8081:8080 -d mz2mo/mz2mo-server'
             }
+        }
+    }
+
+    post {
+        success {
+            discordSend description: "어플리케이션 배포에 성공했어요!",
+              footer: "젠킨스 배포 알림",
+              link: env.BUILD_URL, result: currentBuild.currentResult,
+              title: "${PROJECT_NAME}#${env.BUILD_NUMBER}",
+              webhookURL: env.DISCORD_WEBHOOK_URL
+        }
+        failure {
+            discordSend description: "어플리케이션 배포에 실패했어요!",
+              footer: "젠킨스 배포 알림",
+              link: env.BUILD_URL, result: currentBuild.currentResult,
+              title: "${PROJECT_NAME}#${env.BUILD_NUMBER}",
+              webhookURL: env.DISCORD_WEBHOOK_URL
         }
     }
 }
