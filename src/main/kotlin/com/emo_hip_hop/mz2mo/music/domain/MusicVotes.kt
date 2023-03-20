@@ -1,4 +1,4 @@
-package com.emo_hip_hop.mz2mo.domain.music.domain
+package com.emo_hip_hop.mz2mo.music.domain
 
 class MusicVotes private constructor(votes: List<MusicVote>): List<MusicVote> by votes {
     companion object {
