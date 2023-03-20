@@ -4,21 +4,22 @@ import java.util.*
 
 data class MusicArticle(
     private val _id: MusicArticleId?,
-    val votes: List<MusicVote>
+    val youtubeId: String,
+    val votes: MusicVotes
 ) {
     val id: Optional<MusicArticleId> = Optional.ofNullable(_id)
 
     companion object {
-        fun withId(id: MusicArticleId, votes: List<MusicVote>) =
-            MusicArticle(id, votes)
+        fun withId(id: MusicArticleId, youtubeId: String, votes: MusicVotes) =
+            MusicArticle(id, youtubeId, votes)
 
-        fun withoutId(votes: List<MusicVote>) =
-            MusicArticle(null, votes)
+        fun withoutId(youtubeId: String, votes: MusicVotes) =
+            MusicArticle(null, youtubeId, votes)
     }
 
     fun addVote(vote: MusicVote) =
-        MusicArticle(id.orElse(null), votes + vote)
+        MusicArticle(_id, youtubeId, votes.with(vote))
 
     fun removeVote(vote: MusicVote) =
-        MusicArticle(id.orElse(null), votes - vote)
+        MusicArticle(_id, youtubeId, votes.without(vote))
 }
