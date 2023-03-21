@@ -7,6 +7,6 @@ import org.springframework.data.mongodb.core.mapping.Document
 @Document(collection = "music_articles")
 class MusicArticleJpaEntity(
     @Id
-    val id: ObjectId?,
+    var id: ObjectId?,
     val youtubeTrackId: String
 )

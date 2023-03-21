@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document
 @Document(collection = "music_votes")
 class MusicVoteJpaEntity(
     @Id
-    val id: ObjectId,
+    var id: ObjectId,
     val musicArticleId: String,
     val accountId: String,
     val emojiId: String
