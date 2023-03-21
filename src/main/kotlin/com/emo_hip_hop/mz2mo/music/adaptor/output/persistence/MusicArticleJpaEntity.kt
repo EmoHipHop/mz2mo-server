@@ -1,4 +1,4 @@
-package com.emo_hip_hop.mz2mo.music.adaptor.output
+package com.emo_hip_hop.mz2mo.music.adaptor.output.persistence
 
 import org.bson.types.ObjectId
 import org.springframework.data.annotation.Id

@@ -1,4 +1,4 @@
-package com.emo_hip_hop.mz2mo.music.adaptor.output
+package com.emo_hip_hop.mz2mo.music.adaptor.output.persistence
 
 import com.emo_hip_hop.mz2mo.account.domain.AccountId
 import com.emo_hip_hop.mz2mo.emoji.domain.EmojiId
