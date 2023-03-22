@@ -6,6 +6,7 @@ import com.emo_hip_hop.mz2mo.music.application.port.output.CreateMusicArticlePor
 import com.emo_hip_hop.mz2mo.music.application.port.output.ExistsMusicPort
 import com.emo_hip_hop.mz2mo.music.domain.MusicArticle
 import com.emo_hip_hop.mz2mo.global.UseCase
+import com.emo_hip_hop.mz2mo.music.domain.MusicAlreadyExistsException
 import com.emo_hip_hop.mz2mo.music.application.port.output.CreateMusicPort
 import com.emo_hip_hop.mz2mo.music.domain.Music
 import com.emo_hip_hop.mz2mo.music.domain.MusicVotes
