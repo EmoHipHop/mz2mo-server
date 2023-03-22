@@ -5,5 +5,5 @@ import javax.validation.constraints.NotBlank
 
 class AddMusicArticleCommand(
     @field:NotBlank
-    val youtubeTrackId: String
+    val youtubeId: String
 ): SelfValidating<AddMusicArticleCommand>()

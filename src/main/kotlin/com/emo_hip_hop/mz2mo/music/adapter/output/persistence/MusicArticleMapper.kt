@@ -2,29 +2,28 @@ package com.emo_hip_hop.mz2mo.music.adapter.output.persistence
 
 import com.emo_hip_hop.mz2mo.account.domain.AccountId
 import com.emo_hip_hop.mz2mo.emoji.domain.EmojiId
-import com.emo_hip_hop.mz2mo.music.domain.MusicArticle
-import com.emo_hip_hop.mz2mo.music.domain.MusicArticleId
-import com.emo_hip_hop.mz2mo.music.domain.MusicVote
-import com.emo_hip_hop.mz2mo.music.domain.MusicVotes
+import com.emo_hip_hop.mz2mo.music.domain.*
 import org.bson.types.ObjectId
 
 fun MusicArticle.toEntity(): MusicArticleJpaEntity {
     return MusicArticleJpaEntity(
-        id = id.orElse(null)?.let{ ObjectId(it.id) },
-        youtubeTrackId = youtubeId,
+        id = uuid?.let { ObjectId(it) },
+        musicId = music.id.let { if(it.isPresent) it.get().id else ""  }
     )
 }
 
-fun MusicArticleJpaEntity.toDomain(votes: List<MusicVoteJpaEntity>): MusicArticle {
+fun MusicArticleJpaEntity.toDomain(votes: List<MusicVoteJpaEntity>, youtubeId: String): MusicArticle {
     return MusicArticle(
-        _id = id?.let { MusicArticleId(it.toString()) },
-        youtubeId = youtubeTrackId,
+        uuid = id.toString(),
+        music = Music.withId(MusicId(musicId), youtubeId),
         votes = votes.map { it.toDomain() }.let { MusicVotes.of(it) }
     )
 }
 
 private fun MusicVoteJpaEntity.toDomain(): MusicVote {
     return MusicVote(
+        uuid = id?.toString(),
+        musicId = MusicId(musicId),
         accountId = AccountId(accountId),
         emojiId = EmojiId(emojiId)
     )

@@ -1,22 +1,20 @@
 package com.emo_hip_hop.mz2mo.music.adapter.input.web
 
-import com.emo_hip_hop.mz2mo.music.domain.MusicArticle
-import com.emo_hip_hop.mz2mo.music.domain.MusicVotes
+import com.emo_hip_hop.mz2mo.music.domain.*
 
 fun MusicArticle.toResponse(): MusicArticleResponse {
-    val id = id.let { if (it.isPresent) it.get().id else "" }
+    val id = music.id.idOrEmpty()
     return MusicArticleResponse(
         id = id,
-        youtubeId = youtubeId,
-        votes = votes.toResponse(id)
+        youtubeId = music.youtubeId,
+        votes = votes.toResponse()
     )
 }
 
-//TODO MusicVote 및 MusicArticle 모두 musicId 를 참조하게 변경하기
-private fun MusicVotes.toResponse(articleId: String): List<MusicVoteResponse> = map {
+private fun MusicVotes.toResponse(): List<MusicVoteResponse> = map { vote ->
     MusicVoteResponse(
-        articleId = articleId,
-        accountId = it.accountId.id,
-        emojiId = it.emojiId.id
+        articleId = vote.musicId.id,
+        accountId = vote.accountId.id,
+        emojiId = vote.emojiId.id
     )
 }

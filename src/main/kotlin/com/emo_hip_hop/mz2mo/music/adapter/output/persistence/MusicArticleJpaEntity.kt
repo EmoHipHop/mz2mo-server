@@ -8,5 +8,5 @@ import org.springframework.data.mongodb.core.mapping.Document
 class MusicArticleJpaEntity(
     @Id
     var id: ObjectId?,
-    val youtubeTrackId: String
+    val musicId: String
 )
