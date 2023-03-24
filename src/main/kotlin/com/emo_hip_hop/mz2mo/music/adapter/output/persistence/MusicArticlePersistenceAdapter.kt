@@ -8,27 +8,30 @@ import com.emo_hip_hop.mz2mo.music.domain.MusicId
 import com.emo_hip_hop.mz2mo.music.domain.MusicNotFoundException
 
 @PersistenceAdapter
-class MusicArticlePersistenceAdaptor(
+class MusicArticlePersistenceAdapter(
     private val musicArticleRepository: SpringDataMusicArticleRepository,
     private val musicVoteRepository: SpringDataMusicVoteRepository,
     private val musicRepository: SpringDataMusicRepository
 ): CreateMusicArticlePort, QueryMusicArticlePort {
-    override fun create(musicArticle: MusicArticle): MusicArticle {
-        val entity = musicArticle.toEntity()
-        val savedEntity = musicArticleRepository.save(entity)
-        val votes = musicVoteRepository.findAllByMusicId(savedEntity.musicId)
-        val youtubeId = musicArticle.music.youtubeId
-        return savedEntity.toDomain(votes, youtubeId)
+    override fun create(domain: MusicArticle): MusicArticle {
+        val entityToAdd = domain.toEntity()
+        val musicArticle = musicArticleRepository.save(entityToAdd)
+        return aggregateMusicArticle(musicArticle)
     }
 
     override fun findByMusicId(id: MusicId): MusicArticle? {
         val musicArticle = musicArticleRepository.findByMusicId(id.id) ?: return null
-        val musicId = musicArticle.musicId
+        return aggregateMusicArticle(musicArticle)
+    }
 
+    fun aggregateMusicArticle(
+        musicArticle: MusicArticleJpaEntity,
+    ): MusicArticle {
+        val musicId = musicArticle.musicId
         val votes = musicVoteRepository.findAllByMusicId(musicId)
         val music = musicRepository.findById(musicId)
             .orElseThrow{ MusicNotFoundException("musicId", musicId) }
 
-        return aggregateMusicArticle(musicArticle, votes, music)
+        return musicArticle.toDomain(votes, music)
     }
 }
