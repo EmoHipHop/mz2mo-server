@@ -5,6 +5,14 @@ import com.emo_hip_hop.mz2mo.emoji.domain.EmojiId
 import com.emo_hip_hop.mz2mo.music.domain.*
 import org.bson.types.ObjectId
 
+fun aggregateMusicArticle(
+    musicArticle: MusicArticleJpaEntity,
+    votes: List<MusicVoteJpaEntity>,
+    music: MusicJpaEntity
+): MusicArticle {
+    return musicArticle.toDomain(votes, music.youtubeId)
+}
+
 fun MusicArticle.toEntity(): MusicArticleJpaEntity {
     return MusicArticleJpaEntity(
         id = uuid?.let { ObjectId(it) },
