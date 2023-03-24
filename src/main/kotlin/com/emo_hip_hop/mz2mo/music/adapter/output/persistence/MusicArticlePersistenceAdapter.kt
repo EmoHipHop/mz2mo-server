@@ -5,7 +5,7 @@ import com.emo_hip_hop.mz2mo.music.application.port.output.CreateMusicArticlePor
 import com.emo_hip_hop.mz2mo.music.application.port.output.QueryMusicArticlePort
 import com.emo_hip_hop.mz2mo.music.domain.MusicArticle
 import com.emo_hip_hop.mz2mo.music.domain.MusicId
-import com.emo_hip_hop.mz2mo.music.domain.MusicNotFoundException
+import com.emo_hip_hop.mz2mo.music.domain.MusicOutOfSyncException
 
 @PersistenceAdapter
 class MusicArticlePersistenceAdapter(
@@ -30,7 +30,7 @@ class MusicArticlePersistenceAdapter(
         val musicId = musicArticle.musicId
         val votes = musicVoteRepository.findAllByMusicId(musicId)
         val music = musicRepository.findById(musicId)
-            .orElseThrow{ MusicNotFoundException("musicId", musicId) }
+            .orElseThrow{ MusicOutOfSyncException("id", musicId, syncTo = "musicArticle") }
 
         return musicArticle.toDomain(votes, music)
     }
