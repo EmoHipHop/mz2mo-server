@@ -27,6 +27,6 @@ class AddMusicArticleService(
 
     private fun checkAlreadyExists(command: AddMusicArticleCommand) {
         val isExists = existsMusicPort.byYoutubeId(command.youtubeId)
-        if (isExists) throw MusicAlreadyExistsException(command.youtubeId)
+        if (isExists) throw MusicAlreadyExistsException("youtubeId", command.youtubeId)
     }
 }

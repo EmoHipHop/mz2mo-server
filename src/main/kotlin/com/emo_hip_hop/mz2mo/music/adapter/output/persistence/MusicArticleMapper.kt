@@ -12,10 +12,10 @@ fun MusicArticle.toEntity(): MusicArticleJpaEntity {
     )
 }
 
-fun MusicArticleJpaEntity.toDomain(votes: List<MusicVoteJpaEntity>, youtubeId: String): MusicArticle {
+fun MusicArticleJpaEntity.toDomain(votes: List<MusicVoteJpaEntity>, music: MusicJpaEntity): MusicArticle {
     return MusicArticle(
         uuid = id.toString(),
-        music = Music.withId(MusicId(musicId), youtubeId),
+        music = Music.withId(MusicId(musicId), music.youtubeId),
         votes = votes.map { it.toDomain() }.let { MusicVotes.of(it) }
     )
 }
