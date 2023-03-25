@@ -4,8 +4,8 @@ import org.bson.types.ObjectId
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 
-@Document(collection = "music_articles")
-class MusicArticleJpaEntity(
+@Document(collection = "music_communities")
+class MusicCommunitiesJpaEntity(
     @Id
     var id: ObjectId?,
     val musicId: String
