@@ -1,4 +1,4 @@
-package com.emo_hip_hop.mz2mo.music.adapter.input.web
+package com.emo_hip_hop.mz2mo.music.adapter.input.web.response
 
 import io.swagger.v3.oas.annotations.media.Schema
 
