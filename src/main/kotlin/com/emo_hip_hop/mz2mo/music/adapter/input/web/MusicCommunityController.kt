@@ -56,7 +56,7 @@ class MusicCommunityController(
         return ResponseEntity.ok(response)
     }
 
-    @GetMapping("/")
+    @GetMapping("/search")
     @Operation(summary = "음악 커뮤니티 검색", description = "음악 커뮤니티를 검색합니다. 검색 결과 목록을 반환합니다.")
     @ApiResponses(value = [
         ApiResponse(responseCode = "200", description = "음악 커뮤니티 검색 성공",
