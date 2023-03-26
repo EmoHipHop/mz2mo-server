@@ -3,11 +3,11 @@ package com.emo_hip_hop.mz2mo.music.adapter.output.persistence
 import com.emo_hip_hop.mz2mo.account.domain.AccountId
 import com.emo_hip_hop.mz2mo.emoji.domain.EmojiId
 import com.emo_hip_hop.mz2mo.music.domain.*
-import org.bson.types.ObjectId
+import java.util.*
 
 fun MusicCommunity.toEntity(): MusicCommunitiesJpaEntity {
     return MusicCommunitiesJpaEntity(
-        id = uuid?.let { ObjectId(it) },
+        id = uuid,
         musicId = music.id.let { if(it.isPresent) it.get().id else ""  }
     )
 }
