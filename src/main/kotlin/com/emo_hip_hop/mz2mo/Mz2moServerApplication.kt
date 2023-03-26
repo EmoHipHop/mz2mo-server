@@ -1,6 +1,6 @@
 package com.emo_hip_hop.mz2mo
 
-import com.emo_hip_hop.mz2mo.music.adapter.output.persistence.CustomMusicCommunityRepositoryImpl
+import com.emo_hip_hop.mz2mo.music.adapter.output.persistence.repository.CustomMusicCommunityRepositoryImpl
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories

@@ -2,6 +2,10 @@ package com.emo_hip_hop.mz2mo.music.adapter.output.persistence
 
 import com.emo_hip_hop.mz2mo.global.PersistenceAdapter
 import com.emo_hip_hop.mz2mo.global.common.domain.Pageable
+import com.emo_hip_hop.mz2mo.music.adapter.output.persistence.entity.MusicCommunitiesJpaEntity
+import com.emo_hip_hop.mz2mo.music.adapter.output.persistence.repository.SpringDataCustomMusicCommunityRepository
+import com.emo_hip_hop.mz2mo.music.adapter.output.persistence.repository.SpringDataMusicRepository
+import com.emo_hip_hop.mz2mo.music.adapter.output.persistence.repository.SpringDataMusicVoteRepository
 import com.emo_hip_hop.mz2mo.music.application.port.output.CreateMusicCommunityPort
 import com.emo_hip_hop.mz2mo.music.application.port.output.QueryMusicCommunityPort
 import com.emo_hip_hop.mz2mo.music.application.port.output.SearchMusicCommunityPort
