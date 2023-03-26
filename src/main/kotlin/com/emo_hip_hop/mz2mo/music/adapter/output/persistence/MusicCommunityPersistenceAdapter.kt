@@ -8,6 +8,7 @@ import com.emo_hip_hop.mz2mo.music.application.port.output.SearchMusicCommunityP
 import com.emo_hip_hop.mz2mo.music.domain.MusicCommunity
 import com.emo_hip_hop.mz2mo.music.domain.MusicId
 import com.emo_hip_hop.mz2mo.music.domain.MusicOutOfSyncException
+import java.util.*
 
 @PersistenceAdapter
 class MusicCommunityPersistenceAdapter(
@@ -16,7 +17,10 @@ class MusicCommunityPersistenceAdapter(
     private val musicRepository: SpringDataMusicRepository
 ): CreateMusicCommunityPort, QueryMusicCommunityPort, SearchMusicCommunityPort {
     override fun create(domain: MusicCommunity): MusicCommunity {
+        val id = UUID.randomUUID()
         val entityToAdd = domain.toEntity()
+        if(entityToAdd.id == null) entityToAdd.id = id.toString()
+        println("uuid is ${entityToAdd.id}")
         val musicCommunity = musicCommunityRepository.save(entityToAdd)
         return aggregateMusicCommunity(musicCommunity)
     }
