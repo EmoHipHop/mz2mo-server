@@ -3,7 +3,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://${DATABASE_HOST}:${DATABASE_PORT}/mz2mo?useSSL=false&serverTimezone=Asia/Seoul
+    url: jdbc:mysql://${DATABASE_HOST}:${DATABASE_PORT}/mz2mo?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul
     username: ${DATABASE_USERNAME}
     password: ${DATABASE_PASSWORD}
 
