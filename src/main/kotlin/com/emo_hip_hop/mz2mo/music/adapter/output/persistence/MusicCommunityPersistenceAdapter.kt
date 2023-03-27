@@ -1,20 +1,26 @@
 package com.emo_hip_hop.mz2mo.music.adapter.output.persistence
 
 import com.emo_hip_hop.mz2mo.global.PersistenceAdapter
+import com.emo_hip_hop.mz2mo.global.common.domain.Pageable
 import com.emo_hip_hop.mz2mo.music.application.port.output.CreateMusicCommunityPort
 import com.emo_hip_hop.mz2mo.music.application.port.output.QueryMusicCommunityPort
+import com.emo_hip_hop.mz2mo.music.application.port.output.SearchMusicCommunityPort
 import com.emo_hip_hop.mz2mo.music.domain.MusicCommunity
 import com.emo_hip_hop.mz2mo.music.domain.MusicId
 import com.emo_hip_hop.mz2mo.music.domain.MusicOutOfSyncException
+import java.util.*
 
 @PersistenceAdapter
 class MusicCommunityPersistenceAdapter(
-    private val musicCommunityRepository: SpringDataMusicCommunityRepository,
+    private val musicCommunityRepository: SpringDataCustomMusicCommunityRepository,
     private val musicVoteRepository: SpringDataMusicVoteRepository,
     private val musicRepository: SpringDataMusicRepository
-): CreateMusicCommunityPort, QueryMusicCommunityPort {
+): CreateMusicCommunityPort, QueryMusicCommunityPort, SearchMusicCommunityPort {
     override fun create(domain: MusicCommunity): MusicCommunity {
+        val id = UUID.randomUUID()
         val entityToAdd = domain.toEntity()
+        if(entityToAdd.id == null) entityToAdd.id = id.toString()
+        println("uuid is ${entityToAdd.id}")
         val musicCommunity = musicCommunityRepository.save(entityToAdd)
         return aggregateMusicCommunity(musicCommunity)
     }
@@ -33,5 +39,10 @@ class MusicCommunityPersistenceAdapter(
             .orElseThrow{ MusicOutOfSyncException("id", musicId, syncTo = "musicCommunity") }
 
         return musicCommunity.toDomain(votes, music)
+    }
+
+    override fun search(pageable: Pageable): List<MusicCommunity> {
+        val musicCommunities = musicCommunityRepository.search(pageable)
+        return musicCommunities.map { aggregateMusicCommunity(it) }
     }
 }

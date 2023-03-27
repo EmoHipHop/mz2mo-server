@@ -2,14 +2,10 @@ server:
   port: ${SERVER_PORT:8080}
 
 spring:
-  data:
-    mongodb:
-      username: ${DATABASE_USERNAME}
-      password: ${DATABASE_PASSWORD}
-      host: ${DATABASE_HOST}
-      port: ${DATABASE_PORT}
-      authentication-database: admin
-      database: mz2mo
+  datasource:
+    url: jdbc:mysql://${DATABASE_HOST}:${DATABASE_PORT}/mz2mo?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
 
 logging:
   level:

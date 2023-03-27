@@ -11,6 +11,13 @@ fun MusicCommunity.toResponse(): MusicCommunityResponse {
     )
 }
 
+fun List<MusicCommunity>.toResponse(): MusicCommunitiesResponse {
+    return MusicCommunitiesResponse(
+        musicCommunities = size,
+        list = map { it.toResponse() }
+    )
+}
+
 private fun MusicVotes.toResponse(): List<MusicVoteResponse> = map { vote ->
     MusicVoteResponse(
         musicId = vote.musicId.id,
