@@ -10,3 +10,8 @@ spring:
 logging:
   level:
     root: ${LOGGING_LEVEL:INFO}
+
+mz2mo:
+  music:
+    vote:
+      max-vote-count: ${MUSIC_VOTE_MAX_VOTE_COUNT:3}
