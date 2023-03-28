@@ -33,8 +33,8 @@ class MusicCommunityPersistenceAdapter(
     override fun update(musicCommunity: MusicCommunity): MusicCommunity {
         val musicId = musicCommunity.music.id.orElseThrow{ EmptyMusicIdException() }
 
-        if(musicCommunityRepository.existsByMusicId(musicId.id)) throw MusicOutOfSyncException("id", musicId.id, syncTo = "musicCommunity")
-        if(musicRepository.existsById(musicId.id)) throw MusicNotFoundException("id", musicId.id)
+        if(!musicCommunityRepository.existsByMusicId(musicId.id)) throw MusicOutOfSyncException("id", musicId.id, syncTo = "musicCommunity")
+        if(!musicRepository.existsById(musicId.id)) throw MusicNotFoundException("id", musicId.id)
 
         val musicToAdd = musicCommunity.music.toEntity()
         musicRepository.save(musicToAdd)
