@@ -2,8 +2,10 @@ package com.emo_hip_hop.mz2mo.music.adapter.output.persistence
 
 import com.emo_hip_hop.mz2mo.account.domain.AccountId
 import com.emo_hip_hop.mz2mo.emoji.domain.EmojiId
+import com.emo_hip_hop.mz2mo.music.adapter.output.persistence.entity.MusicCommunitiesJpaEntity
+import com.emo_hip_hop.mz2mo.music.adapter.output.persistence.entity.MusicJpaEntity
+import com.emo_hip_hop.mz2mo.music.adapter.output.persistence.entity.MusicVoteJpaEntity
 import com.emo_hip_hop.mz2mo.music.domain.*
-import java.util.*
 
 fun MusicCommunity.toEntity(): MusicCommunitiesJpaEntity {
     return MusicCommunitiesJpaEntity(
@@ -14,7 +16,7 @@ fun MusicCommunity.toEntity(): MusicCommunitiesJpaEntity {
 
 fun MusicCommunitiesJpaEntity.toDomain(votes: List<MusicVoteJpaEntity>, music: MusicJpaEntity): MusicCommunity {
     return MusicCommunity(
-        uuid = id.toString(),
+        uuid = id,
         music = Music.withId(MusicId(musicId), music.youtubeId),
         votes = votes.map { it.toDomain() }.let { MusicVotes.of(it) }
     )
@@ -22,7 +24,7 @@ fun MusicCommunitiesJpaEntity.toDomain(votes: List<MusicVoteJpaEntity>, music: M
 
 private fun MusicVoteJpaEntity.toDomain(): MusicVote {
     return MusicVote(
-        uuid = id?.toString(),
+        uuid = id,
         musicId = MusicId(musicId),
         accountId = AccountId(accountId),
         emojiId = EmojiId(emojiId)
