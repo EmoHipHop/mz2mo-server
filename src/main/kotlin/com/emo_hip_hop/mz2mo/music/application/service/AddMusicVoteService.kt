@@ -6,6 +6,9 @@ import com.emo_hip_hop.mz2mo.music.application.port.input.AddMusicVoteUseCase
 import com.emo_hip_hop.mz2mo.music.application.port.output.QueryMusicCommunityPort
 import com.emo_hip_hop.mz2mo.music.application.port.output.UpdateMusicCommunityPort
 import com.emo_hip_hop.mz2mo.music.domain.*
+import com.emo_hip_hop.mz2mo.music.domain.exception.AlreadyVoteException
+import com.emo_hip_hop.mz2mo.music.domain.exception.ExceedMaximumVotesPerUserException
+import com.emo_hip_hop.mz2mo.music.domain.exception.MusicCommunityOrPartialNotFoundException
 import org.springframework.beans.factory.annotation.Value
 
 @UseCase

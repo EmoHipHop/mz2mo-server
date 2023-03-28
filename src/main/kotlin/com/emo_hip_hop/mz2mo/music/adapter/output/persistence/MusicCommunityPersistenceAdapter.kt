@@ -12,6 +12,9 @@ import com.emo_hip_hop.mz2mo.music.application.port.output.QueryMusicCommunityPo
 import com.emo_hip_hop.mz2mo.music.application.port.output.SearchMusicCommunityPort
 import com.emo_hip_hop.mz2mo.music.application.port.output.UpdateMusicCommunityPort
 import com.emo_hip_hop.mz2mo.music.domain.*
+import com.emo_hip_hop.mz2mo.music.domain.exception.EmptyMusicIdException
+import com.emo_hip_hop.mz2mo.music.domain.exception.MusicNotFoundException
+import com.emo_hip_hop.mz2mo.music.domain.exception.MusicOutOfSyncException
 import java.util.*
 
 @PersistenceAdapter

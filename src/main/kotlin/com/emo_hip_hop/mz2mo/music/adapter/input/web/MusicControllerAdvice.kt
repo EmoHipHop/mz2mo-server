@@ -1,6 +1,7 @@
 package com.emo_hip_hop.mz2mo.music.adapter.input.web
 
 import com.emo_hip_hop.mz2mo.music.domain.*
+import com.emo_hip_hop.mz2mo.music.domain.exception.*
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
