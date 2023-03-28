@@ -3,15 +3,15 @@ package com.emo_hip_hop.mz2mo.music.adapter.output.persistence
 import com.emo_hip_hop.mz2mo.global.PersistenceAdapter
 import com.emo_hip_hop.mz2mo.global.common.domain.Pageable
 import com.emo_hip_hop.mz2mo.music.adapter.output.persistence.entity.MusicCommunitiesJpaEntity
+import com.emo_hip_hop.mz2mo.music.adapter.output.persistence.entity.MusicVoteJpaEntity
 import com.emo_hip_hop.mz2mo.music.adapter.output.persistence.repository.SpringDataCustomMusicCommunityRepository
 import com.emo_hip_hop.mz2mo.music.adapter.output.persistence.repository.SpringDataMusicRepository
 import com.emo_hip_hop.mz2mo.music.adapter.output.persistence.repository.SpringDataMusicVoteRepository
 import com.emo_hip_hop.mz2mo.music.application.port.output.CreateMusicCommunityPort
 import com.emo_hip_hop.mz2mo.music.application.port.output.QueryMusicCommunityPort
 import com.emo_hip_hop.mz2mo.music.application.port.output.SearchMusicCommunityPort
-import com.emo_hip_hop.mz2mo.music.domain.MusicCommunity
-import com.emo_hip_hop.mz2mo.music.domain.MusicId
-import com.emo_hip_hop.mz2mo.music.domain.MusicOutOfSyncException
+import com.emo_hip_hop.mz2mo.music.application.port.output.UpdateMusicCommunityPort
+import com.emo_hip_hop.mz2mo.music.domain.*
 import java.util.*
 
 @PersistenceAdapter
@@ -19,7 +19,7 @@ class MusicCommunityPersistenceAdapter(
     private val musicCommunityRepository: SpringDataCustomMusicCommunityRepository,
     private val musicVoteRepository: SpringDataMusicVoteRepository,
     private val musicRepository: SpringDataMusicRepository
-): CreateMusicCommunityPort, QueryMusicCommunityPort, SearchMusicCommunityPort {
+): CreateMusicCommunityPort, UpdateMusicCommunityPort, QueryMusicCommunityPort, SearchMusicCommunityPort {
     override fun create(domain: MusicCommunity): MusicCommunity {
         val id = UUID.randomUUID()
         val entityToAdd = domain.toEntity()
@@ -28,6 +28,48 @@ class MusicCommunityPersistenceAdapter(
         val musicCommunity = musicCommunityRepository.save(entityToAdd)
         return aggregateMusicCommunity(musicCommunity)
     }
+
+    //💡In addition to MusicVote and Music, updates may occur for other Domains in MusicCommunity later.
+    override fun update(musicCommunity: MusicCommunity): MusicCommunity {
+        val musicId = musicCommunity.music.id.orElseThrow{ EmptyMusicIdException() }
+
+        if(!musicCommunityRepository.existsByMusicId(musicId.id)) throw MusicOutOfSyncException("id", musicId.id, syncTo = "musicCommunity")
+        if(!musicRepository.existsById(musicId.id)) throw MusicNotFoundException("id", musicId.id)
+
+        val musicToAdd = musicCommunity.music.toEntity()
+        musicRepository.save(musicToAdd)
+
+        val existsMusicVoteEntities = musicVoteRepository.findAllByMusicId(musicId.id)
+
+        /* 💡Venn Diagram for update vote
+        - (inEntity), [inDomain]
+        - (in Entity but outed Domain[
+        - )in Domain but outed Entity]
+        ➡️ (votesToDelete [VotesOutOfAllScopes) votesToAdd]
+         */
+        val votesToDelete = existsInEntityBytNotExistsInDomain(existsMusicVoteEntities, musicCommunity.votes)
+        musicVoteRepository.deleteAllById(votesToDelete.map { it.id })
+
+        val votesToAdd = existsInDomainBytNotExistsInEntity(musicId, existsMusicVoteEntities, musicCommunity.votes)
+        musicVoteRepository.saveAll(votesToAdd)
+        return findByMusicId(musicId)!!
+    }
+    fun existsInEntityBytNotExistsInDomain(
+        entities: List<MusicVoteJpaEntity>,
+        domains: MusicVotes
+    ): List<MusicVoteJpaEntity> =
+        entities.filter { entity -> domains.none { domain -> compareWithoutId(domain, entity) } }
+
+    fun existsInDomainBytNotExistsInEntity(
+        musicId: MusicId,
+        entities: List<MusicVoteJpaEntity>,
+        domains: MusicVotes
+    ): List<MusicVoteJpaEntity> =
+        domains.filter { domain -> entities.none { entity -> compareWithoutId(domain, entity) } }
+            .map { it.toEntity(musicId.id) }
+
+    private fun compareWithoutId(domain: MusicVote, entity: MusicVoteJpaEntity): Boolean =
+        domain.emojiId.id == entity.emojiId && domain.musicId.id == entity.musicId
 
     override fun findByMusicId(id: MusicId): MusicCommunity? {
         val musicCommunity = musicCommunityRepository.findByMusicId(id.id) ?: return null

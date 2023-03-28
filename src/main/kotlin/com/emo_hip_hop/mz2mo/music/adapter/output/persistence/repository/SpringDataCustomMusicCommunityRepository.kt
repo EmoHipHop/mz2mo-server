@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 interface SpringDataCustomMusicCommunityRepository: JpaRepository<MusicCommunitiesJpaEntity, String>,
     CustomMusicCommunityRepository {
     fun findByMusicId(musicId: String): MusicCommunitiesJpaEntity?
+    fun existsByMusicId(id: String): Boolean
 }
