@@ -4,7 +4,7 @@ import com.emo_hip_hop.mz2mo.account.domain.AccountId
 import com.emo_hip_hop.mz2mo.emoji.domain.EmojiId
 import com.emo_hip_hop.mz2mo.music.domain.MusicId
 
-class VoteNotFoundException(
+class MusicVoteNotFoundException(
     musicId: MusicId,
     accountId: AccountId,
     emojiId: EmojiId

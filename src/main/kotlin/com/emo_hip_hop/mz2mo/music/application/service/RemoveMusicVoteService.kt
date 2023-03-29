@@ -7,7 +7,7 @@ import com.emo_hip_hop.mz2mo.music.application.port.output.QueryMusicCommunityPo
 import com.emo_hip_hop.mz2mo.music.application.port.output.UpdateMusicCommunityPort
 import com.emo_hip_hop.mz2mo.music.domain.MusicCommunity
 import com.emo_hip_hop.mz2mo.music.domain.exception.MusicCommunityOrPartialNotFoundException
-import com.emo_hip_hop.mz2mo.music.domain.exception.VoteNotFoundException
+import com.emo_hip_hop.mz2mo.music.domain.exception.MusicVoteNotFoundException
 
 @UseCase
 class RemoveMusicVoteService(
@@ -33,6 +33,6 @@ class RemoveMusicVoteService(
         val musicId = command.musicId
 
         val currentVoteCount = musicCommunity.votes.size
-        if (currentVoteCount <= 0) throw VoteNotFoundException(musicId, command.accountId, command.emojiId)
+        if (currentVoteCount <= 0) throw MusicVoteNotFoundException(musicId, command.accountId, command.emojiId)
     }
 }
