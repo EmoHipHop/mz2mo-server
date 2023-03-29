@@ -32,7 +32,10 @@ class RemoveMusicVoteService(
     private fun checkCanRemoveVote(musicCommunity: MusicCommunity, command: RemoveMusicVoteCommand) {
         val musicId = command.musicId
 
-        val currentVoteCount = musicCommunity.votes.size
-        if (currentVoteCount <= 0) throw MusicVoteNotFoundException(musicId, command.accountId, command.emojiId)
+        val voteExists = musicCommunity.votes.any {
+            it.accountId.id == command.accountId.id &&
+                it.emojiId.id == command.emojiId.id
+        }
+        if (!voteExists) throw MusicVoteNotFoundException(musicId, command.accountId, command.emojiId)
     }
 }
