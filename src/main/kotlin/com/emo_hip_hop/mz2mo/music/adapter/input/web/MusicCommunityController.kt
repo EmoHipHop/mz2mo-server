@@ -37,6 +37,10 @@ class MusicCommunityController(
             ApiResponse(
                 responseCode = "400", description = "요청값이 올바르지 않을 경우",
                 content = [Content(schema = Schema(implementation = String::class))]
+            ),
+            ApiResponse(
+                responseCode = "404", description = "관련 자원을 찾을 수 없을경우",
+                content = [Content(schema = Schema(implementation = String::class))]
             )
         ]
     )
@@ -57,6 +61,10 @@ class MusicCommunityController(
             ),
             ApiResponse(
                 responseCode = "400", description = "요청값이 올바르지 않을 경우",
+                content = [Content(schema = Schema(implementation = String::class))]
+            ),
+            ApiResponse(
+                responseCode = "404", description = "관련 자원을 찾을 수 없을경우",
                 content = [Content(schema = Schema(implementation = String::class))]
             ),
             ApiResponse(
@@ -82,6 +90,10 @@ class MusicCommunityController(
             ),
             ApiResponse(
                 responseCode = "400", description = "요청값이 올바르지 않을 경우",
+                content = [Content(schema = Schema(implementation = String::class))]
+            ),
+            ApiResponse(
+                responseCode = "404", description = "관련 자원을 찾을 수 없을경우",
                 content = [Content(schema = Schema(implementation = String::class))]
             ),
             ApiResponse(
