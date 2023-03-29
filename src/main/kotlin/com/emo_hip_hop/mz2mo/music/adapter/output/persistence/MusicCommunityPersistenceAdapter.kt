@@ -22,11 +22,11 @@ class MusicCommunityPersistenceAdapter(
     private val musicCommunityRepository: SpringDataCustomMusicCommunityRepository,
     private val musicVoteRepository: SpringDataMusicVoteRepository,
     private val musicRepository: SpringDataMusicRepository
-): CreateMusicCommunityPort, UpdateMusicCommunityPort, QueryMusicCommunityPort, SearchMusicCommunityPort {
+) : CreateMusicCommunityPort, UpdateMusicCommunityPort, QueryMusicCommunityPort, SearchMusicCommunityPort {
     override fun create(domain: MusicCommunity): MusicCommunity {
         val id = UUID.randomUUID()
         val entityToAdd = domain.toEntity()
-        if(entityToAdd.id == null) entityToAdd.id = id.toString()
+        if (entityToAdd.id == null) entityToAdd.id = id.toString()
         println("uuid is ${entityToAdd.id}")
         val musicCommunity = musicCommunityRepository.save(entityToAdd)
         return aggregateMusicCommunity(musicCommunity)
@@ -34,10 +34,10 @@ class MusicCommunityPersistenceAdapter(
 
     //💡In addition to MusicVote and Music, updates may occur for other Domains in MusicCommunity later.
     override fun update(musicCommunity: MusicCommunity): MusicCommunity {
-        val musicId = musicCommunity.music.id.orElseThrow{ EmptyMusicIdException() }
+        val musicId = musicCommunity.music.id.orElseThrow { EmptyMusicIdException() }
 
-        if(!musicCommunityRepository.existsByMusicId(musicId.id)) throw MusicOutOfSyncException("id", musicId.id, syncTo = "musicCommunity")
-        if(!musicRepository.existsById(musicId.id)) throw MusicNotFoundException("id", musicId.id)
+        if (!musicCommunityRepository.existsByMusicId(musicId.id)) throw MusicOutOfSyncException("id", musicId.id, syncTo = "musicCommunity")
+        if (!musicRepository.existsById(musicId.id)) throw MusicNotFoundException("id", musicId.id)
 
         val musicToAdd = musicCommunity.music.toEntity()
         musicRepository.save(musicToAdd)
@@ -85,7 +85,7 @@ class MusicCommunityPersistenceAdapter(
         val musicId = musicCommunity.musicId
         val votes = musicVoteRepository.findAllByMusicId(musicId)
         val music = musicRepository.findById(musicId)
-            .orElseThrow{ MusicOutOfSyncException("id", musicId, syncTo = "musicCommunity") }
+            .orElseThrow { MusicOutOfSyncException("id", musicId, syncTo = "musicCommunity") }
 
         return musicCommunity.toDomain(votes, music)
     }

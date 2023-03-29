@@ -9,4 +9,4 @@ class AddMusicVoteCommand(
     val musicId: MusicId,
     val accountId: AccountId,
     val emojiId: EmojiId
-): SelfValidating<AddMusicVoteCommand>()
+) : SelfValidating<AddMusicVoteCommand>()

@@ -2,7 +2,6 @@ package com.emo_hip_hop.mz2mo.global.validate
 
 import javax.validation.*
 
-
 abstract class SelfValidating<T> {
     private val validator: Validator
 

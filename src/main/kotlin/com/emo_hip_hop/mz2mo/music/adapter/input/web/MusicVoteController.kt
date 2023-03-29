@@ -31,12 +31,18 @@ class MusicVoteController(
 ) {
     @PostMapping
     @Operation(summary = "음악 투표 추가", description = "음악 투표를 추가합니다.")
-    @ApiResponses(value = [
-        ApiResponse(responseCode = "201", description = "음악 투표 추가 성공",
-            content = [Content(schema = Schema(implementation = MusicCommunityResponse::class))]),
-        ApiResponse(responseCode = "400", description = "요청값이 올바르지 않을 경우",
-            content = [Content(schema = Schema(implementation = String::class))])
-    ])
+    @ApiResponses(
+        value = [
+            ApiResponse(
+                responseCode = "201", description = "음악 투표 추가 성공",
+                content = [Content(schema = Schema(implementation = MusicCommunityResponse::class))]
+            ),
+            ApiResponse(
+                responseCode = "400", description = "요청값이 올바르지 않을 경우",
+                content = [Content(schema = Schema(implementation = String::class))]
+            )
+        ]
+    )
     fun addMusicVote(
         @PathVariable
         @Pattern(regexp = UUID_PATTERN, message = "음악 ID 형식이 올바르지 않습니다.")

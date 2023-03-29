@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component
 @Component
 class CustomMusicCommunityRepositoryImpl(
     private val queryFactory: SpringDataQueryFactory
-): CustomMusicCommunityRepository {
+) : CustomMusicCommunityRepository {
     override fun search(pageable: Pageable): List<MusicCommunitiesJpaEntity> {
         return queryFactory.listQuery {
             select(entity(MusicCommunitiesJpaEntity::class))

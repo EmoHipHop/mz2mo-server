@@ -10,11 +10,11 @@ import java.util.*
 @PersistenceAdapter
 class MusicPersistenceAdapter(
     private val musicRepository: SpringDataMusicRepository,
-): CreateMusicPort, ExistsMusicPort {
+) : CreateMusicPort, ExistsMusicPort {
     override fun create(music: Music): Music {
         val id = UUID.randomUUID()
         val entityToAdd = music.toEntity()
-        if(entityToAdd.id == null) entityToAdd.id = id.toString()
+        if (entityToAdd.id == null) entityToAdd.id = id.toString()
         println("uuid is ${entityToAdd.id}")
         val savedEntity = musicRepository.save(entityToAdd)
         return savedEntity.toDomain()
@@ -23,5 +23,4 @@ class MusicPersistenceAdapter(
     override fun byYoutubeId(youtubeId: String): Boolean {
         return musicRepository.existsByYoutubeId(youtubeId)
     }
-
 }

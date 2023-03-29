@@ -16,7 +16,7 @@ class AddMusicCommunityService(
     private val createMusicCommunityPort: CreateMusicCommunityPort,
     private val existsMusicPort: ExistsMusicPort,
     private val createMusicPort: CreateMusicPort,
-): AddMusicCommunityUseCase {
+) : AddMusicCommunityUseCase {
     override fun invoke(command: AddMusicCommunityCommand): MusicCommunity {
         checkAlreadyExists(command)
         val music = Music.withoutId(command.youtubeId)

@@ -17,11 +17,11 @@ class AddMusicVoteService(
     @Value("\${mz2mo.music.vote.max-vote-count}")
     private val maxVoteCount: Int,
     private val updateMusicCommunityPort: UpdateMusicCommunityPort
-): AddMusicVoteUseCase {
+) : AddMusicVoteUseCase {
     override fun invoke(command: AddMusicVoteCommand): MusicCommunity {
         val musicId = command.musicId
         val musicCommunity = queryMusicCommunityPort.findByMusicId(musicId)
-                ?: throw MusicCommunityOrPartialNotFoundException("musicId", musicId.id)
+            ?: throw MusicCommunityOrPartialNotFoundException("musicId", musicId.id)
 
         checkCanVote(musicCommunity, command)
 
@@ -34,9 +34,9 @@ class AddMusicVoteService(
         val musicId = command.musicId
 
         val currentVoteCount = musicCommunity.votes.size
-        if(currentVoteCount >= maxVoteCount) throw ExceedMaximumVotesPerUserException(musicId.id, currentVoteCount, maxVoteCount)
+        if (currentVoteCount >= maxVoteCount) throw ExceedMaximumVotesPerUserException(musicId.id, currentVoteCount, maxVoteCount)
 
         val isAlreadyVote = musicCommunity.votes.any { it.accountId.id == command.accountId.id && it.emojiId.id == command.emojiId.id }
-        if(isAlreadyVote) throw AlreadyVoteException(musicId.id, command.accountId.id, command.emojiId.id)
+        if (isAlreadyVote) throw AlreadyVoteException(musicId.id, command.accountId.id, command.emojiId.id)
     }
 }

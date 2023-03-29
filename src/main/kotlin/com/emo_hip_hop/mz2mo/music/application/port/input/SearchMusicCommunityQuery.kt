@@ -8,4 +8,4 @@ import com.emo_hip_hop.mz2mo.global.validate.SelfValidating
  */
 class SearchMusicCommunityQuery(
     val pageable: Pageable
-): SelfValidating<SearchMusicCommunityQuery>()
+) : SelfValidating<SearchMusicCommunityQuery>()

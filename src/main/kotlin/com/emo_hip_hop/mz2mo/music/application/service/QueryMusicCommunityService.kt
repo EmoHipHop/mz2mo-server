@@ -10,7 +10,7 @@ import com.emo_hip_hop.mz2mo.music.domain.MusicId
 @UseCase
 class QueryMusicCommunityService(
     private val queryMusicCommunityPort: QueryMusicCommunityPort
-): QueryMusicCommunityUseCase {
+) : QueryMusicCommunityUseCase {
     override fun invoke(musicId: MusicId): MusicCommunity {
         val communityOrNull = queryMusicCommunityPort.findByMusicId(musicId)
         return communityOrNull ?: throw MusicCommunityOrPartialNotFoundException("musicId", musicId.id)

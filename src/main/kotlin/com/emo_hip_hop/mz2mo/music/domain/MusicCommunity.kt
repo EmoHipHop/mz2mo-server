@@ -1,6 +1,6 @@
 package com.emo_hip_hop.mz2mo.music.domain
 
-data class MusicCommunity (
+data class MusicCommunity(
     val uuid: String?,
     val music: Music,
     val votes: MusicVotes

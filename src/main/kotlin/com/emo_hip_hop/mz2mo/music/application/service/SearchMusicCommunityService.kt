@@ -9,7 +9,7 @@ import com.emo_hip_hop.mz2mo.music.domain.MusicCommunity
 @UseCase
 class SearchMusicCommunityService(
     private val searchMusicCommunityPort: SearchMusicCommunityPort
-): SearchMusicCommunityUseCase {
+) : SearchMusicCommunityUseCase {
     override fun invoke(query: SearchMusicCommunityQuery): List<MusicCommunity> {
         return searchMusicCommunityPort.search(query.pageable)
     }
