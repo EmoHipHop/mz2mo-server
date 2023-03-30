@@ -14,5 +14,5 @@ enum class ErrorCode(
     MUSIC_NOT_FOUND(DomainCode.MUSIC, CauseOriginCode.CLIENT, 7),
     MUSIC_ALREADY_EXISTS(DomainCode.MUSIC, CauseOriginCode.CLIENT, 8);
 
-    fun getErrorCode() = String.format("%d%d%03d", domain.code, cause.code, index)
+    val code = String.format("%02d%01d%03d", domain.code, cause.code, index)
 }
