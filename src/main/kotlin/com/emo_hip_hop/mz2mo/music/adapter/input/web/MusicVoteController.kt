@@ -3,7 +3,7 @@ package com.emo_hip_hop.mz2mo.music.adapter.input.web
 import com.emo_hip_hop.mz2mo.account.application.port.input.QueryLoginedAccountUseCase
 import com.emo_hip_hop.mz2mo.emoji.application.port.input.QueryEmojiUseCase
 import com.emo_hip_hop.mz2mo.global.WebAdapter
-import com.emo_hip_hop.mz2mo.global.validate.UUID_PATTERN
+import com.emo_hip_hop.mz2mo.global.validate.domain.UUID_PATTERN
 import com.emo_hip_hop.mz2mo.music.adapter.input.web.request.AddMusicVoteRequest
 import com.emo_hip_hop.mz2mo.music.adapter.input.web.request.RemoveMusicVoteRequest
 import com.emo_hip_hop.mz2mo.music.adapter.input.web.response.MusicCommunityResponse

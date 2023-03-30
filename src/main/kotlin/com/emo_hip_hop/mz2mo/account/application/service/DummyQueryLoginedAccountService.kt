@@ -4,7 +4,7 @@ import com.emo_hip_hop.mz2mo.account.application.port.input.QueryLoginedAccountU
 import com.emo_hip_hop.mz2mo.account.domain.Account
 import com.emo_hip_hop.mz2mo.account.domain.AccountId
 import com.emo_hip_hop.mz2mo.global.UseCase
-import com.emo_hip_hop.mz2mo.global.validate.UUID_EXAMPLE
+import com.emo_hip_hop.mz2mo.global.validate.domain.UUID_EXAMPLE
 
 @UseCase
 class DummyQueryLoginedAccountService : QueryLoginedAccountUseCase {

@@ -1,5 +1,5 @@
 
-package com.emo_hip_hop.mz2mo.global.swagger.config
+package com.emo_hip_hop.mz2mo.global
 
 import io.swagger.v3.oas.models.OpenAPI
 import io.swagger.v3.oas.models.info.Info

@@ -1,7 +1,7 @@
 package com.emo_hip_hop.mz2mo.music.adapter.input.web.response
 
-import com.emo_hip_hop.mz2mo.global.validate.UUID_EXAMPLE
-import com.emo_hip_hop.mz2mo.global.validate.UUID_PATTERN
+import com.emo_hip_hop.mz2mo.global.validate.domain.UUID_EXAMPLE
+import com.emo_hip_hop.mz2mo.global.validate.domain.UUID_PATTERN
 import io.swagger.v3.oas.annotations.media.Schema
 import javax.validation.constraints.Pattern
 
