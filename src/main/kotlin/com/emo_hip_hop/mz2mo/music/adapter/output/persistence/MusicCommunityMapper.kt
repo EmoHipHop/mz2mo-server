@@ -10,7 +10,7 @@ import com.emo_hip_hop.mz2mo.music.domain.*
 fun MusicCommunity.toEntity(): MusicCommunitiesJpaEntity {
     return MusicCommunitiesJpaEntity(
         id = uuid,
-        musicId = music.id.let { if(it.isPresent) it.get().id else ""  }
+        musicId = music.id.let { if (it.isPresent) it.get().id else "" }
     )
 }
 

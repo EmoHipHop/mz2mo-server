@@ -6,4 +6,4 @@ import javax.validation.constraints.NotBlank
 class AddMusicCommunityCommand(
     @field:NotBlank
     val youtubeId: String
-): SelfValidating<AddMusicCommunityCommand>()
+) : SelfValidating<AddMusicCommunityCommand>()

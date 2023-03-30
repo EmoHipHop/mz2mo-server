@@ -11,5 +11,5 @@ fun Music.toEntity(): MusicJpaEntity =
     )
 
 fun MusicJpaEntity.toDomain(): Music =
-    if(id == null) Music.withoutId(youtubeId)
+    if (id == null) Music.withoutId(youtubeId)
     else Music.withId(MusicId(id.toString()), youtubeId)

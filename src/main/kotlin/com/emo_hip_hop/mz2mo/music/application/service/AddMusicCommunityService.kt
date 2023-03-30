@@ -6,7 +6,7 @@ import com.emo_hip_hop.mz2mo.music.application.port.output.CreateMusicCommunityP
 import com.emo_hip_hop.mz2mo.music.application.port.output.ExistsMusicPort
 import com.emo_hip_hop.mz2mo.music.domain.MusicCommunity
 import com.emo_hip_hop.mz2mo.global.UseCase
-import com.emo_hip_hop.mz2mo.music.domain.MusicAlreadyExistsException
+import com.emo_hip_hop.mz2mo.music.domain.exception.MusicAlreadyExistsException
 import com.emo_hip_hop.mz2mo.music.application.port.output.CreateMusicPort
 import com.emo_hip_hop.mz2mo.music.domain.Music
 import com.emo_hip_hop.mz2mo.music.domain.MusicVotes
@@ -16,7 +16,7 @@ class AddMusicCommunityService(
     private val createMusicCommunityPort: CreateMusicCommunityPort,
     private val existsMusicPort: ExistsMusicPort,
     private val createMusicPort: CreateMusicPort,
-): AddMusicCommunityUseCase {
+) : AddMusicCommunityUseCase {
     override fun invoke(command: AddMusicCommunityCommand): MusicCommunity {
         checkAlreadyExists(command)
         val music = Music.withoutId(command.youtubeId)

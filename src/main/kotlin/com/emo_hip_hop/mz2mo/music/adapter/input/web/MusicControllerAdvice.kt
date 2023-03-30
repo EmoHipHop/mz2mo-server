@@ -1,6 +1,8 @@
 package com.emo_hip_hop.mz2mo.music.adapter.input.web
 
 import com.emo_hip_hop.mz2mo.music.domain.*
+import com.emo_hip_hop.mz2mo.music.domain.exception.*
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
@@ -15,10 +17,6 @@ class MusicControllerAdvice {
     fun handle(e: MusicOutOfSyncException): ResponseEntity<String> {
         return ResponseEntity.internalServerError().body(e.message)
     }
-    @ExceptionHandler(MusicCommunityOrPartialNotFoundException::class)
-    fun handle(e: MusicCommunityOrPartialNotFoundException): ResponseEntity<String> {
-        return ResponseEntity.badRequest().body(e.message)
-    }
     @ExceptionHandler(AlreadyVoteException::class)
     fun handle(e: AlreadyVoteException): ResponseEntity<String> {
         return ResponseEntity.badRequest().body(e.message)
@@ -31,8 +29,16 @@ class MusicControllerAdvice {
     fun handle(e: ExceedMaximumVotesPerUserException): ResponseEntity<String> {
         return ResponseEntity.badRequest().body(e.message)
     }
+    @ExceptionHandler(MusicCommunityOrPartialNotFoundException::class)
+    fun handle(e: MusicCommunityOrPartialNotFoundException): ResponseEntity<String> {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.message)
+    }
     @ExceptionHandler(MusicNotFoundException::class)
     fun handle(e: MusicNotFoundException): ResponseEntity<String> {
-        return ResponseEntity.badRequest().body(e.message)
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.message)
+    }
+    @ExceptionHandler(MusicVoteNotFoundException::class)
+    fun handle(e: MusicVoteNotFoundException): ResponseEntity<String> {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.message)
     }
 }

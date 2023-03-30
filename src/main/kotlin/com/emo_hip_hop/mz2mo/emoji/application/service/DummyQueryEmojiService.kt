@@ -6,9 +6,9 @@ import com.emo_hip_hop.mz2mo.emoji.domain.EmojiId
 import com.emo_hip_hop.mz2mo.global.UseCase
 
 @UseCase
-class DummyQueryEmojiService: QueryEmojiUseCase {
+class DummyQueryEmojiService : QueryEmojiUseCase {
     override fun invoke(rawEmoji: String): Emoji {
         val uuid = rawEmoji
-        return Emoji(EmojiId(uuid),"dummy-emoji", rawEmoji)
+        return Emoji(EmojiId(uuid), "dummy-emoji", rawEmoji)
     }
 }

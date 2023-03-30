@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema
 import javax.validation.constraints.Pattern
 
 @Schema(name = "MusicVoteResponse", description = "음악 투표 응답")
-data class MusicVoteResponse (
+data class MusicVoteResponse(
     @Schema(description = "음악 ID", example = UUID_EXAMPLE)
     val musicId: String,
     @Schema(description = "계정 ID", example = UUID_EXAMPLE)

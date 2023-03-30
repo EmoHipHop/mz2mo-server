@@ -7,7 +7,7 @@ import com.emo_hip_hop.mz2mo.global.UseCase
 import com.emo_hip_hop.mz2mo.global.validate.UUID_EXAMPLE
 
 @UseCase
-class DummyQueryLoginedAccountService: QueryLoginedAccountUseCase {
+class DummyQueryLoginedAccountService : QueryLoginedAccountUseCase {
     override fun invoke(): Account {
         return Account(AccountId(UUID_EXAMPLE))
     }

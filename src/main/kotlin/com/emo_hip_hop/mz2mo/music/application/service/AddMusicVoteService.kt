@@ -6,6 +6,9 @@ import com.emo_hip_hop.mz2mo.music.application.port.input.AddMusicVoteUseCase
 import com.emo_hip_hop.mz2mo.music.application.port.output.QueryMusicCommunityPort
 import com.emo_hip_hop.mz2mo.music.application.port.output.UpdateMusicCommunityPort
 import com.emo_hip_hop.mz2mo.music.domain.*
+import com.emo_hip_hop.mz2mo.music.domain.exception.AlreadyVoteException
+import com.emo_hip_hop.mz2mo.music.domain.exception.ExceedMaximumVotesPerUserException
+import com.emo_hip_hop.mz2mo.music.domain.exception.MusicCommunityOrPartialNotFoundException
 import org.springframework.beans.factory.annotation.Value
 
 @UseCase
@@ -14,11 +17,11 @@ class AddMusicVoteService(
     @Value("\${mz2mo.music.vote.max-vote-count}")
     private val maxVoteCount: Int,
     private val updateMusicCommunityPort: UpdateMusicCommunityPort
-): AddMusicVoteUseCase {
+) : AddMusicVoteUseCase {
     override fun invoke(command: AddMusicVoteCommand): MusicCommunity {
         val musicId = command.musicId
         val musicCommunity = queryMusicCommunityPort.findByMusicId(musicId)
-                ?: throw MusicCommunityOrPartialNotFoundException("musicId", musicId.id)
+            ?: throw MusicCommunityOrPartialNotFoundException("musicId", musicId.id)
 
         checkCanVote(musicCommunity, command)
 
@@ -31,9 +34,9 @@ class AddMusicVoteService(
         val musicId = command.musicId
 
         val currentVoteCount = musicCommunity.votes.size
-        if(currentVoteCount >= maxVoteCount) throw ExceedMaximumVotesPerUserException(musicId.id, currentVoteCount, maxVoteCount)
+        if (currentVoteCount >= maxVoteCount) throw ExceedMaximumVotesPerUserException(musicId.id, currentVoteCount, maxVoteCount)
 
         val isAlreadyVote = musicCommunity.votes.any { it.accountId.id == command.accountId.id && it.emojiId.id == command.emojiId.id }
-        if(isAlreadyVote) throw AlreadyVoteException(musicId.id, command.accountId.id, command.emojiId.id)
+        if (isAlreadyVote) throw AlreadyVoteException(musicId.id, command.accountId.id, command.emojiId.id)
     }
 }
