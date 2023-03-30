@@ -8,4 +8,4 @@ class MusicVoteNotFoundException(
     musicId: MusicId,
     accountId: AccountId,
     emojiId: EmojiId
-) : RuntimeException("vote not found! - $accountId: '${accountId.id}', $emojiId: '${emojiId.id}', $musicId: '${musicId.id}")
+) : RuntimeException("vote not found! - accountId: '${accountId.id}', emojiId: '${emojiId.id}', musicId: '${musicId.id}'")
