@@ -5,8 +5,10 @@ import com.emo_hip_hop.mz2mo.emoji.application.port.input.QueryEmojiUseCase
 import com.emo_hip_hop.mz2mo.global.WebAdapter
 import com.emo_hip_hop.mz2mo.music.adapter.input.web.request.AddMusicVoteRequest
 import com.emo_hip_hop.mz2mo.music.adapter.input.web.response.MusicCommunityResponse
+import com.emo_hip_hop.mz2mo.music.adapter.input.web.response.MusicVotePercentagesResponse
 import com.emo_hip_hop.mz2mo.music.application.port.input.AddMusicVoteCommand
 import com.emo_hip_hop.mz2mo.music.application.port.input.AddMusicVoteUseCase
+import com.emo_hip_hop.mz2mo.music.application.port.input.QueryMusicVotePercentageByEmojiUseCase
 import com.emo_hip_hop.mz2mo.music.domain.MusicId
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Content
@@ -25,11 +27,33 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/api/v1/onboarding/music/votes")
 class OnboardingMusicVoteController(
     private val addMusicVoteUseCase: AddMusicVoteUseCase,
+    private val queryMusicVotePercentageUseCase: QueryMusicVotePercentageByEmojiUseCase,
     private val queryLoginedAccountUseCase: QueryLoginedAccountUseCase,
     private val queryEmojiUseCase: QueryEmojiUseCase,
     @Value("\${mz2mo.onboarding.music.id}")
     private val onboardingMusicId: String
 ) {
+    @GetMapping
+    @Operation(summary = "온보딩 음악 투표율 조회", description = "온보딩 음악 투표율을 조회합니다.")
+    @ApiResponses(
+        value = [
+            ApiResponse(
+                responseCode = "200", description = "음악 투표율 조회 성공",
+                content = [Content(schema = Schema(implementation = MusicCommunityResponse::class))]
+            ),
+            ApiResponse(
+                responseCode = "404", description = "관련 자원을 찾을 수 없을경우",
+                content = [Content(schema = Schema(implementation = String::class))]
+            )
+        ]
+    )
+    fun queryMusicVotePercentage(): ResponseEntity<MusicVotePercentagesResponse> {
+        val musicId = MusicId(onboardingMusicId)
+        val domain = queryMusicVotePercentageUseCase(musicId)
+        val response = domain.toResponse()
+        return ResponseEntity.ok(response)
+    }
+
     @PostMapping
     @Operation(summary = "온보딩 음악 투표 추가", description = "온보딩 음악 투표를 추가합니다.")
     @ApiResponses(
