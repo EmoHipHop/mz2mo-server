@@ -51,10 +51,10 @@ class OnboardingMusicVoteController(
     fun addMusicVote(
         @RequestBody request: AddMusicVoteRequest
     ): ResponseEntity<MusicCommunityResponse> {
-        val musicId = onboardingMusicId
+        val musicId = MusicId(onboardingMusicId)
         val accountId = queryLoginedAccountUseCase().id
         val emojiId = queryEmojiUseCase(request.rawEmoji).id
-        val command = AddMusicVoteCommand(MusicId(musicId), accountId, emojiId)
+        val command = AddMusicVoteCommand(musicId, accountId, emojiId)
         val domain = addMusicVoteUseCase(command)
         val response = domain.toResponse()
         return ResponseEntity.status(HttpStatus.CREATED).body(response)

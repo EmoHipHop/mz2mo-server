@@ -52,14 +52,15 @@ class MusicVoteController(
         ]
     )
     fun addMusicVote(
-        @PathVariable
+        @PathVariable("musicId")
         @Pattern(regexp = UUID_PATTERN, message = "음악 ID 형식이 올바르지 않습니다.")
-        musicId: String,
+        rawMusicId: String,
         @RequestBody request: AddMusicVoteRequest
     ): ResponseEntity<MusicCommunityResponse> {
+        val musicId = MusicId(rawMusicId)
         val accountId = queryLoginedAccountUseCase().id
         val emojiId = queryEmojiUseCase(request.rawEmoji).id
-        val command = AddMusicVoteCommand(MusicId(musicId), accountId, emojiId)
+        val command = AddMusicVoteCommand(musicId, accountId, emojiId)
         val domain = addMusicVoteUseCase(command)
         val response = domain.toResponse()
         return ResponseEntity.status(HttpStatus.CREATED).body(response)
@@ -84,14 +85,15 @@ class MusicVoteController(
         ]
     )
     fun removeMusicVote(
-        @PathVariable
+        @PathVariable("musicId")
         @Pattern(regexp = UUID_PATTERN, message = "음악 ID 형식이 올바르지 않습니다.")
-        musicId: String,
+        rawMusicId: String,
         @RequestBody request: RemoveMusicVoteRequest
     ): ResponseEntity<MusicCommunityResponse> {
+        val musicId = MusicId(rawMusicId)
         val accountId = queryLoginedAccountUseCase().id
         val emojiId = queryEmojiUseCase(request.rawEmoji).id
-        val command = RemoveMusicVoteCommand(MusicId(musicId), accountId, emojiId)
+        val command = RemoveMusicVoteCommand(musicId, accountId, emojiId)
         val domain = removeMusicVoteUseCase(command)
         val response = domain.toResponse()
         return ResponseEntity.ok(response)
