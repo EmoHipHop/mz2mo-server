@@ -1,13 +1,10 @@
 package com.emo_hip_hop.mz2mo.music.adapter.input.web
 
-import com.emo_hip_hop.mz2mo.account.application.port.input.QueryLoginedAccountUseCase
-import com.emo_hip_hop.mz2mo.emoji.application.port.input.QueryEmojiUseCase
 import com.emo_hip_hop.mz2mo.global.WebAdapter
 import com.emo_hip_hop.mz2mo.music.adapter.input.web.request.AddMusicVoteRequest
 import com.emo_hip_hop.mz2mo.music.adapter.input.web.response.MusicCommunityResponse
 import com.emo_hip_hop.mz2mo.music.adapter.input.web.response.MusicVotePercentagesResponse
-import com.emo_hip_hop.mz2mo.music.application.port.input.AddMusicVoteCommand
-import com.emo_hip_hop.mz2mo.music.application.port.input.AddMusicVoteUseCase
+import com.emo_hip_hop.mz2mo.music.application.port.input.QueryMusicCommunityUseCase
 import com.emo_hip_hop.mz2mo.music.application.port.input.QueryMusicVotePercentageByEmojiUseCase
 import com.emo_hip_hop.mz2mo.music.domain.MusicId
 import io.swagger.v3.oas.annotations.Operation
@@ -26,10 +23,8 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/api/v1/onboarding/music/votes")
 class OnboardingMusicVoteController(
-    private val addMusicVoteUseCase: AddMusicVoteUseCase,
     private val queryMusicVotePercentageUseCase: QueryMusicVotePercentageByEmojiUseCase,
-    private val queryLoginedAccountUseCase: QueryLoginedAccountUseCase,
-    private val queryEmojiUseCase: QueryEmojiUseCase,
+    private val queryMusicCommunityUseCase: QueryMusicCommunityUseCase,
     @Value("\${mz2mo.onboarding.music.id}")
     private val onboardingMusicId: String
 ) {
@@ -76,10 +71,12 @@ class OnboardingMusicVoteController(
         @RequestBody request: AddMusicVoteRequest
     ): ResponseEntity<MusicCommunityResponse> {
         val musicId = MusicId(onboardingMusicId)
-        val accountId = queryLoginedAccountUseCase().id
-        val emojiId = queryEmojiUseCase(request.rawEmoji).id
-        val command = AddMusicVoteCommand(musicId, accountId, emojiId)
-        val domain = addMusicVoteUseCase(command)
+        // guest의 투표는 저장하지 않는다.
+        // val accountId = queryLoginedAccountUseCase().id
+        // val emojiId = queryEmojiUseCase(request.rawEmoji).id
+        // val command = AddMusicVoteCommand(musicId, accountId, emojiId)
+        // addMusicVoteUseCase(command)
+        val domain = queryMusicCommunityUseCase(musicId)
         val response = domain.toResponse()
         return ResponseEntity.status(HttpStatus.CREATED).body(response)
     }
