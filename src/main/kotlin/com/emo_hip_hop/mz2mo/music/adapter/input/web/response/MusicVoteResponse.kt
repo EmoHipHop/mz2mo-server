@@ -8,6 +8,7 @@ import javax.validation.constraints.Pattern
 @Schema(name = "MusicVoteResponse", description = "음악 투표 응답")
 data class MusicVoteResponse(
     @Schema(description = "음악 ID", example = UUID_EXAMPLE)
+    @Pattern(regexp = UUID_PATTERN, message = "음악 ID 형식이 올바르지 않습니다.")
     val musicId: String,
     @Schema(description = "계정 ID", example = UUID_EXAMPLE)
     @Pattern(regexp = UUID_PATTERN, message = "계정 ID 형식이 올바르지 않습니다.")
