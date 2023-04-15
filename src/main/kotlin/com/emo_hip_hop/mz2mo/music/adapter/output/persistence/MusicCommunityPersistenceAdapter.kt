@@ -79,7 +79,7 @@ class MusicCommunityPersistenceAdapter(
         return aggregateMusicCommunity(musicCommunity)
     }
 
-    fun aggregateMusicCommunity(
+    private fun aggregateMusicCommunity(
         musicCommunity: MusicCommunitiesJpaEntity,
     ): MusicCommunity {
         val musicId = musicCommunity.musicId
