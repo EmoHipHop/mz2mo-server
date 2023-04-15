@@ -1,4 +1,4 @@
-package com.emo_hip_hop.mz2mo.global.security.config
+package com.emo_hip_hop.mz2mo.global
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

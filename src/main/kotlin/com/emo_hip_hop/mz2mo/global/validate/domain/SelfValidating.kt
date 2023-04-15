@@ -1,4 +1,4 @@
-package com.emo_hip_hop.mz2mo.global.validate
+package com.emo_hip_hop.mz2mo.global.validate.domain
 
 import javax.validation.*
 
