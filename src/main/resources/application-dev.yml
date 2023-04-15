@@ -6,3 +6,7 @@ spring:
       hibernate:
         show_sql: true
         dialect: org.hibernate.dialect.MySQL8Dialect
+mz2mo:
+  onboarding:
+    music:
+      id: 667896fb-f147-4e68-8470-a2d3d61e6a24
