@@ -25,7 +25,7 @@ class AddMusicVoteService(
 
         checkCanVote(musicCommunity, command)
 
-        val vote = MusicVote(null, musicId, command.accountId, command.emojiId)
+        val vote = MusicVote(MusicVoteId.create(), musicId, command.accountId, command.emojiId)
         val musicCommunityToUpdate = musicCommunity.addVote(vote)
         return updateMusicCommunityPort.update(musicCommunityToUpdate)
     }
@@ -33,7 +33,7 @@ class AddMusicVoteService(
     private fun checkCanVote(musicCommunity: MusicCommunity, command: AddMusicVoteCommand) {
         val musicId = command.musicId
 
-        val currentVoteCount = musicCommunity.votes.size
+        val currentVoteCount = musicCommunity.votes.filter { it.accountId.id == command.accountId.id }.size
         if (currentVoteCount >= maxVoteCount) throw ExceedMaximumVotesPerUserException(musicId.id, currentVoteCount, maxVoteCount)
 
         val isAlreadyVote = musicCommunity.votes.any { it.accountId.id == command.accountId.id && it.emojiId.id == command.emojiId.id }

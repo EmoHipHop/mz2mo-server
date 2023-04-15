@@ -22,9 +22,9 @@ fun MusicCommunitiesJpaEntity.toDomain(votes: List<MusicVoteJpaEntity>, music: M
     )
 }
 
-private fun MusicVoteJpaEntity.toDomain(): MusicVote {
+fun MusicVoteJpaEntity.toDomain(): MusicVote {
     return MusicVote(
-        uuid = id,
+        id = MusicVoteId(id),
         musicId = MusicId(musicId),
         accountId = AccountId(accountId),
         emojiId = EmojiId(emojiId)

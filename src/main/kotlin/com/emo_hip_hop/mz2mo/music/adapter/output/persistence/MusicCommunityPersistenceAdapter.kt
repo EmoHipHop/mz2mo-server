@@ -69,17 +69,17 @@ class MusicCommunityPersistenceAdapter(
         domains: MusicVotes
     ): List<MusicVoteJpaEntity> =
         domains.filter { domain -> entities.none { entity -> compareWithoutId(domain, entity) } }
-            .map { it.toEntity(musicId.id) }
+            .map { it.toEntity() }
 
     private fun compareWithoutId(domain: MusicVote, entity: MusicVoteJpaEntity): Boolean =
-        domain.emojiId.id == entity.emojiId && domain.musicId.id == entity.musicId
+        domain.emojiId.id == entity.emojiId && domain.musicId.id == entity.musicId && domain.accountId.id == entity.accountId
 
     override fun findByMusicId(id: MusicId): MusicCommunity? {
         val musicCommunity = musicCommunityRepository.findByMusicId(id.id) ?: return null
         return aggregateMusicCommunity(musicCommunity)
     }
 
-    fun aggregateMusicCommunity(
+    private fun aggregateMusicCommunity(
         musicCommunity: MusicCommunitiesJpaEntity,
     ): MusicCommunity {
         val musicId = musicCommunity.musicId

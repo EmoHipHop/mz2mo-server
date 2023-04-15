@@ -5,15 +5,14 @@ import com.emo_hip_hop.mz2mo.global.validate.domain.UUID_PATTERN
 import io.swagger.v3.oas.annotations.media.Schema
 import javax.validation.constraints.Pattern
 
-@Schema(name = "MusicVoteResponse", description = "음악 투표 응답")
-data class MusicVoteResponse(
+@Schema(name = "MusicVotePercentageResponse", description = "음악 투표율 응답")
+data class MusicVotePercentageResponse(
     @Schema(description = "음악 ID", example = UUID_EXAMPLE)
     @Pattern(regexp = UUID_PATTERN, message = "음악 ID 형식이 올바르지 않습니다.")
     val musicId: String,
-    @Schema(description = "계정 ID", example = UUID_EXAMPLE)
-    @Pattern(regexp = UUID_PATTERN, message = "계정 ID 형식이 올바르지 않습니다.")
-    val accountId: String,
     @Schema(description = "이모지 ID", example = UUID_EXAMPLE)
     @Pattern(regexp = UUID_PATTERN, message = "이모지 ID 형식이 올바르지 않습니다.")
     val emojiId: String,
+    @Schema(description = "투표율", example = "28.53")
+    val percentage: Double,
 )

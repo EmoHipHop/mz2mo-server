@@ -7,7 +7,7 @@ import javax.persistence.*
 class MusicVoteJpaEntity(
     @Id
     @Column(columnDefinition = "VARCHAR(36)")
-    var id: String?,
+    var id: String,
     val musicId: String,
     val accountId: String,
     val emojiId: String
