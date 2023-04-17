@@ -15,3 +15,5 @@ mz2mo:
   music:
     vote:
       max-vote-count: ${MUSIC_VOTE_MAX_VOTE_COUNT:3}
+cors:
+  allowedOrigins: ${ALLOWED_ORIGINS_LIST:http://localhost:3000}
